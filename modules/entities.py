@@ -287,9 +287,6 @@ class Player(Entity):
 class EntityManager(object):
     def __init__(self: Self, *args: Entity) -> None:
         self.entities = list(args)
-        # _entities serves as render rules and a list of entities
-        # key is the entity
-        # value is if the entity should be rendered or not
 
     @property
     def entities(self: Self) -> tuple:
