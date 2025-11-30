@@ -159,9 +159,9 @@ class Camera(object):
             texture_xs = texture_xs.astype('int')
             texture_ys = texture_ys.astype('int')
 
-            offsets = np.vstack(offsets)
             floor = texture[texture_xs, texture_ys]
             # lighting
+            offsets = np.vstack(offsets)
             floor = floor * np.minimum(offsets / (height / 2), 1)**0.97
             # can't do *= ^
             pg.surfarray.blit_array(self._floor_and_ceiling, floor)
