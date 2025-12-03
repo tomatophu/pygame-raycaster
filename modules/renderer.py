@@ -35,7 +35,6 @@ class Camera(object):
         self._horizon = None
         self._player = player
         self._tile_size = tile_size
-        self._render_elevation = self._player._elevation
         self._wall_render_distance = wall_render_distance
         self._wall_textures = wall_textures
         self._floor_texture = floor_texture
