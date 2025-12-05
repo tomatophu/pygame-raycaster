@@ -183,7 +183,7 @@ class Camera(object):
             slope = ray.y / ray.x if ray.x else math.inf
             tile = pg.Vector2(math.floor(end_pos.x), math.floor(end_pos.y))
             dir = (ray.x > 0, ray.y > 0)
-            rel_depth = 0
+            rel_depth = 0 # relative to yaw magnitude
             dist = 0 
             # keep on changing end_pos until hitting a wall (DDA)
             while not has_hit and dist < self._wall_render_distance:
