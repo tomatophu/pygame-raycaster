@@ -183,7 +183,7 @@ class Camera(object):
             slope = ray.y / ray.x if ray.x else math.inf
             tile = pg.Vector2(math.floor(end_pos.x), math.floor(end_pos.y))
             dir = (ray.x > 0, ray.y > 0)
-            depth = 0
+            rel_depth = 0
             dist = 0 
             # keep on changing end_pos until hitting a wall (DDA)
             while not has_hit and dist < self._wall_render_distance:
@@ -200,26 +200,26 @@ class Camera(object):
                     tile.x += step_x
                     end_pos.x += disp_x
                     end_pos.y += disp_x * slope
-                    depth += len_x
+                    rel_depth += len_x
                     side = 1
                 else:
                     tile.y += step_y
                     end_pos.x += disp_y / slope if slope else math.inf
                     end_pos.y += disp_y
-                    depth += len_y
+                    rel_depth += len_y
                     side = 0
-                dist = depth * mag
+                dist = rel_depth * mag
                 
                 tile_key = f'{int(tile.x)};{int(tile.y)}'
                 has_hit = (self._player._level['walls'].get(tile_key) != None 
-                           and depth)
+                           and rel_depth)
             if has_hit:
                 # distance already does fisheye correction because it divides
-                # by the magnitude of ray (when "depth" is 1)
-                line_height = min(self._tile_size / depth, height * 5)
+                # by the magnitude of ray
+                line_height = min(self._tile_size / rel_depth, height * 5)
                 # elevation offset
                 offset = (self._player._render_elevation
-                          * self._tile_size / 2 / depth)
+                          * self._tile_size / 2 / rel_depth)
                 # check if line is visible
                 if (-line_height / 2 - offset < horizon 
                     < height + line_height / 2 - offset):
